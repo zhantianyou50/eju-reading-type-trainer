@@ -1,0 +1,448 @@
+{
+  "meta": {
+    "title": "平成28年第1回 読解(题型已标注)",
+    "note": "题型标注来自用户输入。Q18-Q25 的 correct_choice 暂未录入。"
+  },
+  "questions": [
+    {
+      "id": "H28-1-Q01",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 1,
+      "type_main": "focus",
+      "type_sub": "べき型",
+      "center_word": null,
+      "question_image": "images/q01_question.jpg",
+      "page_images": [
+        "images/q01_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 3,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q02",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 2,
+      "type_main": "consistency",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q02_question.jpg",
+      "page_images": [
+        "images/q02_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 4,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q03",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 3,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "どのようにしてわかる",
+      "question_image": "images/q03_question.jpg",
+      "page_images": [
+        "images/q03_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 1,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q04",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 4,
+      "type_main": "mainIdea",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q04_question.jpg",
+      "page_images": [
+        "images/q04_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 2,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q05",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 5,
+      "type_main": "focus",
+      "type_sub": "原因理由",
+      "center_word": null,
+      "question_image": "images/q05_question.jpg",
+      "page_images": [
+        "images/q05_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 4,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q06",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 6,
+      "type_main": "consistency",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q06_question.jpg",
+      "page_images": [
+        "images/q06_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 1,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q07",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 7,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": null,
+      "question_image": "images/q07_question.jpg",
+      "page_images": [
+        "images/q07_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 3,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q08",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 8,
+      "type_main": "mainIdea",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q08_question.jpg",
+      "page_images": [
+        "images/q08_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 3,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q09",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 9,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": null,
+      "question_image": "images/q09_question.jpg",
+      "page_images": [
+        "images/q09_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 3,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q10",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 10,
+      "type_main": "mainIdea",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q10_question.jpg",
+      "page_images": [
+        "images/q10_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 1,
+      "explanation": ""
+    },
+    {
+      "id": "H28-1-Q11",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 11,
+      "type_main": "mainIdea",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q11.12_question.jpg",
+      "page_images": [
+        "images/q11.12_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 3,
+      "explanation": "",
+      "group_id": "G11-12"
+    },
+    {
+      "id": "H28-1-Q12",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 12,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": null,
+      "question_image": "images/q11.12_question.jpg",
+      "page_images": [
+        "images/q11.12_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 1,
+      "explanation": "",
+      "group_id": "G11-12"
+    },
+    {
+      "id": "H28-1-Q13",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 13,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": null,
+      "question_image": "images/q13.14_question.jpg",
+      "page_images": [
+        "images/q13.14_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 4,
+      "explanation": "",
+      "group_id": "G13-14"
+    },
+    {
+      "id": "H28-1-Q14",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 14,
+      "type_main": "consistency",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q13.14_question.jpg",
+      "page_images": [
+        "images/q13.14_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 3,
+      "explanation": "",
+      "group_id": "G13-14"
+    },
+    {
+      "id": "H28-1-Q15",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 15,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": null,
+      "question_image": "images/q15.16_question.jpg",
+      "page_images": [
+        "images/q15.16_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 4,
+      "explanation": "",
+      "group_id": "G15-16"
+    },
+    {
+      "id": "H28-1-Q16",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 16,
+      "type_main": "mainIdea",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q15.16_question.jpg",
+      "page_images": [
+        "images/q15.16_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 2,
+      "explanation": "",
+      "group_id": "G15-16"
+    },
+    {
+      "id": "H28-1-Q17",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 17,
+      "type_main": "focus",
+      "type_sub": "原因理由",
+      "center_word": null,
+      "question_image": "images/q17.18_question.jpg",
+      "page_images": [
+        "images/q17.18_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": 2,
+      "explanation": "",
+      "group_id": "G17-18"
+    },
+    {
+      "id": "H28-1-Q18",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 18,
+      "type_main": "consistency",
+      "type_sub": "",
+      "center_word": null,
+      "question_image": "images/q17.18_question.jpg",
+      "page_images": [
+        "images/q17.18_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G17-18"
+    },
+    {
+      "id": "H28-1-Q19",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 19,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "大切なものは何ですか",
+      "question_image": "images/q19.20_question.jpg",
+      "page_images": [
+        "images/q19.20_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G19-20"
+    },
+    {
+      "id": "H28-1-Q20",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 20,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "どのような態度",
+      "question_image": "images/q19.20_question.jpg",
+      "page_images": [
+        "images/q19.20_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G19-20"
+    },
+    {
+      "id": "H28-1-Q21",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 21,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "展望記憶の失敗例",
+      "question_image": "images/q21.22_question.jpg",
+      "page_images": [
+        "images/q21.22_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G21-22"
+    },
+    {
+      "id": "H28-1-Q22",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 22,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "アクションスリップの説明",
+      "question_image": "images/q21.22_question.jpg",
+      "page_images": [
+        "images/q21.22_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G21-22"
+    },
+    {
+      "id": "H28-1-Q23",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 23,
+      "type_main": "focus",
+      "type_sub": "指示型",
+      "center_word": "そうなっている",
+      "question_image": "images/q23.24.25_question.jpg",
+      "page_images": [
+        "images/q23.24.25_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G23-25"
+    },
+    {
+      "id": "H28-1-Q24",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 24,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "どのような人に対して",
+      "question_image": "images/q23.24.25_question.jpg",
+      "page_images": [
+        "images/q23.24.25_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G23-25"
+    },
+    {
+      "id": "H28-1-Q25",
+      "year": 2016,
+      "era": "平成28",
+      "session": "第1回",
+      "q_no": 25,
+      "type_main": "focus",
+      "type_sub": "中心词",
+      "center_word": "難しい点",
+      "question_image": "images/q23.24.25_question.jpg",
+      "page_images": [
+        "images/q23.24.25_full.jpg"
+      ],
+      "choice_count": 4,
+      "correct_choice": null,
+      "explanation": "",
+      "group_id": "G23-25"
+    }
+  ]
+}

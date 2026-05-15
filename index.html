@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EJU 読解训练（先判题型）</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+    <div>
+      <div class="text-2xl font-extrabold">EJU 読解训练（先判题型）</div>
+      <div id="subtitle" class="text-sm text-slate-500 mt-1">
+        规则：每题先单独判题型；判对当前题后，才显示对应文章。
+      </div>
+      <div id="loadStatus" class="text-xs text-slate-400 mt-2"></div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <select id="setSelect" class="border border-slate-200 rounded-xl px-3 py-2 text-sm bg-white">
+        <option value="h28">平成28 第1回</option>
+        <option value="2022-2">2022 第2回</option>
+      </select>
+
+      <select id="filterSelect" class="border border-slate-200 rounded-xl px-3 py-2 text-sm bg-white">
+        <option value="all">全部题型</option>
+        <option value="主旨题">主旨题</option>
+        <option value="一致题">一致题</option>
+        <option value="焦点：原因理由">焦点：原因理由</option>
+        <option value="焦点：べき型">焦点：べき型</option>
+        <option value="焦点：指示（代词）">焦点：指示（代词）</option>
+        <option value="焦点：中心词">焦点：中心词</option>
+      </select>
+
+      <button id="modeSequential" class="px-3 py-2 rounded-xl text-sm border border-slate-200 bg-white">顺序</button>
+      <button id="modeRandom" class="px-3 py-2 rounded-xl text-sm border border-slate-200 bg-white">随机</button>
+      <button id="btnPrev" class="px-3 py-2 rounded-xl text-sm border border-slate-200 bg-white">上一题</button>
+      <button id="btnNext" class="px-3 py-2 rounded-xl text-sm border border-slate-200 bg-white">下一题</button>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="bg-white rounded-3xl shadow-md border border-slate-200 p-5 md:p-8">
+
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Left: question + passage -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <div class="text-xs font-bold text-slate-400 uppercase">当前题目</div>
+            <div id="titleLine" class="text-xl font-extrabold mt-1">—</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="stageBadge" class="text-xs px-3 py-1 rounded-full border border-slate-200 bg-slate-50">阶段：—</span>
+            <span id="groupBadge" class="text-xs px-3 py-1 rounded-full border border-slate-200 bg-slate-50 hidden">本题属于：—</span>
+          </div>
+        </div>
+
+        <!-- Question image -->
+        <div class="rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-sm font-bold text-slate-500">题干（含选项）</div>
+            <button id="btnZoom" class="text-xs px-3 py-1 rounded-full border border-slate-200 bg-white">放大查看</button>
+          </div>
+          <div id="questionImgWrap" class="w-full"></div>
+        </div>
+
+        <!-- Passage -->
+        <div class="mt-4 border-t border-slate-200 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-xs font-bold text-slate-400 uppercase">整篇文章（原卷）</div>
+            <div id="passageHint" class="text-xs text-slate-500">（未解锁）</div>
+          </div>
+          <div id="pageImgs" class="space-y-3"></div>
+        </div>
+
+      </div>
+
+      <!-- Right: type + answers -->
+      <div class="w-full lg:w-[380px] shrink-0">
+        <div class="rounded-2xl border border-slate-200 p-4 sticky top-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-sm font-bold">题型判定</div>
+              <div id="typeTip" class="text-xs text-slate-500 mt-1">提示：先不要往下滚动看文章（选对本题题型才解锁文章）</div>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <div class="text-xs font-bold text-slate-400 uppercase mb-2">请选择题型</div>
+            <div id="typeBtns" class="grid grid-cols-2 gap-2"></div>
+            <div id="typeFeedback" class="hidden mt-3 text-sm p-3 rounded-2xl"></div>
+          </div>
+
+          <div class="mt-5 border-t border-slate-200 pt-4">
+            <div class="text-xs font-bold text-slate-400 uppercase mb-2">请选择答案</div>
+            <div id="answerBtns" class="grid grid-cols-1 gap-2"></div>
+            <div id="answerFeedback" class="hidden mt-3 text-sm p-3 rounded-2xl"></div>
+          </div>
+
+          <div class="mt-5 text-[11px] text-slate-400 leading-relaxed">
+            使用提示：Mac 打开控制台：<span class="font-semibold">⌥ Option + ⌘ Command + J</span>；打开开发者工具：<span class="font-semibold">⌥ Option + ⌘ Command + I</span>。
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Zoom modal -->
+<div id="zoomModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl max-w-5xl w-full p-4">
+    <div class="flex items-center justify-between mb-2">
+      <div class="font-bold">题干放大</div>
+      <button id="zoomClose" class="px-3 py-1 rounded-xl border border-slate-200">关闭</button>
+    </div>
+    <div id="zoomBody" class="max-h-[80vh] overflow-auto"></div>
+  </div>
+</div>
+
+<script>
+  // -------------------- Config --------------------
+  // JSON文件名：请确保与index.html在同一层
+  const QUESTION_SETS = {
+    h28: {
+      label: '平成28 第1回',
+      paths: ['./h28_rdk_questions.json']
+    },
+    '2022-2': {
+      label: '2022 第2回',
+      paths: ['./eju_2022_2_questions.json']
+    }
+  };
+  let currentSetKey = 'h28';
+
+  // 当题干图片路径写错(比如 q17.18 vs q17,18)时，尝试自动兜底
+  function candidatePaths(p){
+    if(!p) return [];
+    const out = [p];
+    // q17.18_question.jpg <-> q17,18_question.jpg
+    out.push(p.replace(/q(\d+)\.(\d+)_/g, 'q$1,$2_'));
+    out.push(p.replace(/q(\d+),(\d+)_/g, 'q$1.$2_'));
+    // 可能的全角逗号
+    out.push(p.replace(/q(\d+)[，,](\d+)_/g, 'q$1,$2_'));
+    // 去重
+    return Array.from(new Set(out));
+  }
+
+  function createSmartImg(path, className=''){ 
+    const cands = candidatePaths(path);
+    const img = document.createElement('img');
+    img.className = className;
+    img.alt = '';
+    img.loading = 'lazy';
+    let i = 0;
+    img.src = cands[i] || path;
+    img.onerror = () => {
+      i += 1;
+      if(i < cands.length) img.src = cands[i];
+    };
+    return img;
+  }
+
+  // -------------------- State --------------------
+  let rawQuestions = [];
+  let filtered = [];
+  let idx = 0;
+  let mode = 'sequential';
+
+  // per-question: 是否已判题型正确
+  const qTypeUnlocked = Object.create(null);
+
+  // UI cache
+  const el = {
+    loadStatus: document.getElementById('loadStatus'),
+    subtitle: document.getElementById('subtitle'),
+    setSelect: document.getElementById('setSelect'),
+    filterSelect: document.getElementById('filterSelect'),
+    modeSequential: document.getElementById('modeSequential'),
+    modeRandom: document.getElementById('modeRandom'),
+    btnPrev: document.getElementById('btnPrev'),
+    btnNext: document.getElementById('btnNext'),
+    titleLine: document.getElementById('titleLine'),
+    stageBadge: document.getElementById('stageBadge'),
+    groupBadge: document.getElementById('groupBadge'),
+    questionImgWrap: document.getElementById('questionImgWrap'),
+    pageImgs: document.getElementById('pageImgs'),
+    passageHint: document.getElementById('passageHint'),
+    typeTip: document.getElementById('typeTip'),
+    typeBtns: document.getElementById('typeBtns'),
+    typeFeedback: document.getElementById('typeFeedback'),
+    answerBtns: document.getElementById('answerBtns'),
+    answerFeedback: document.getElementById('answerFeedback'),
+    btnZoom: document.getElementById('btnZoom'),
+    zoomModal: document.getElementById('zoomModal'),
+    zoomClose: document.getElementById('zoomClose'),
+    zoomBody: document.getElementById('zoomBody'),
+  };
+
+  // -------------------- Helpers --------------------
+  function safeText(s){ return (s ?? '').toString(); }
+
+  function typeLabelFromQuestion(q){
+    const main = safeText(q.type_main);
+    const sub = safeText(q.type_sub);
+    if(main === 'mainIdea' || /主旨/.test(sub)) return '主旨题';
+    if(main === 'consistency' || /一致/.test(sub)) return '一致题';
+    if(main === 'focus'){
+      if(/原因|理由/.test(sub)) return '焦点：原因理由';
+      if(/べき/.test(sub)) return '焦点：べき型';
+      if(/指示/.test(sub)) return '焦点：指示（代词）';
+      return '焦点：中心词';
+    }
+    // fallback：返回 null 表示无法识别（不强行返回主旨题）
+    return null;
+  }
+
+  // group key：同一篇文章的题 page_images 一致 => 同组
+  // 优先使用 group_id，否则使用 page_images 相同
+  function groupKey(q){
+    // Q11 之后如果有 group_id，优先使用
+    if(q.group_id) return q.group_id;
+    
+    const arr = Array.isArray(q.page_images) ? q.page_images.slice() : [];
+    // 用排序避免顺序变更导致误判
+    arr.sort();
+    return arr.length ? arr.join('|') : ('Q' + q.q_no);
+  }
+
+  function groupIndices(gKey){
+    const list = [];
+    for(let i=0;i<filtered.length;i++){
+      if(groupKey(filtered[i]) === gKey) list.push(i);
+    }
+    return list;
+  }
+
+  function isMultiGroup(gKey){
+    return groupIndices(gKey).length >= 2;
+  }
+
+  function setFeedback(box, ok, text){
+    box.classList.remove('hidden');
+    box.textContent = text;
+    box.className = 'mt-3 text-sm p-3 rounded-2xl ' + (ok ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200');
+  }
+
+  function clearFeedback(){
+    el.typeFeedback.classList.add('hidden');
+    el.answerFeedback.classList.add('hidden');
+  }
+
+  // -------------------- Render --------------------
+  function render(){
+    if(!filtered.length){
+      el.titleLine.textContent = '（暂无题目）';
+      el.questionImgWrap.innerHTML = '';
+      el.pageImgs.innerHTML = '';
+      el.typeBtns.innerHTML = '';
+      el.answerBtns.innerHTML = '';
+      return;
+    }
+
+    const cur = filtered[idx];
+    const curG = groupKey(cur);
+    const curMulti = isMultiGroup(curG);
+
+    // stage：本题题型是否已判对
+    const stage = qTypeUnlocked[cur.id] ? 'question' : 'type';
+
+    // Passage show rule:
+    // - 单题：只有判对本题题型后显示文章
+    // - 多题同文：每一道题也必须单独判对题型，不能复用同组其他题的结果
+    const showPassage = !!qTypeUnlocked[cur.id];
+
+    // Header
+    el.titleLine.textContent = `${safeText(cur.era)} ${safeText(cur.session)} ｜ 问 ${cur.q_no}`;
+    el.stageBadge.textContent = `阶段：${stage === 'type' ? '题型判定' : '做题'}`;
+
+    if(curMulti){
+      const ids = groupIndices(curG).map(i => filtered[i].q_no);
+      el.groupBadge.classList.remove('hidden');
+      el.groupBadge.textContent = `本题属于：短文组（问${ids.join(' / ')})`;
+    } else {
+      el.groupBadge.classList.add('hidden');
+    }
+
+    // Question image
+    el.questionImgWrap.innerHTML = '';
+    const qImg = createSmartImg(cur.question_image, 'w-full rounded-xl border border-slate-200');
+    el.questionImgWrap.appendChild(qImg);
+
+    // Zoom
+    el.btnZoom.onclick = () => {
+      el.zoomBody.innerHTML = '';
+      const big = createSmartImg(cur.question_image, 'w-full');
+      el.zoomBody.appendChild(big);
+      el.zoomModal.classList.remove('hidden');
+    };
+
+    // Passage
+    el.pageImgs.innerHTML = '';
+    el.passageHint.textContent = showPassage ? '（已解锁，可看文章）' : '（未解锁）';
+
+    if(showPassage){
+      const pages = Array.isArray(cur.page_images) ? cur.page_images : [];
+      pages.forEach((p, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'rounded-2xl border border-slate-200 p-3';
+
+        const badge = document.createElement('div');
+        badge.className = 'text-xs font-bold text-slate-400 mb-2';
+        badge.textContent = `P${i+1}`;
+
+        const img = createSmartImg(p, 'w-full rounded-xl border border-slate-200');
+
+        wrap.appendChild(badge);
+        wrap.appendChild(img);
+        el.pageImgs.appendChild(wrap);
+      });
+    } else {
+      // 未解锁时显示空占位，避免页面跳动
+      const tip = document.createElement('div');
+      tip.className = 'text-sm text-slate-400 p-4 rounded-2xl border border-dashed border-slate-200';
+      tip.textContent = '先在右侧完成题型判定，文章才会显示。';
+      el.pageImgs.appendChild(tip);
+    }
+
+    // Tips
+    if(curMulti){
+      if(!showPassage){
+        el.typeTip.textContent = '提示：本题属于短文多问，但题型要单独判定。请先判对本题题型解锁文章。';
+      } else {
+        el.typeTip.textContent = '提示：本题已解锁文章。';
+      }
+    } else {
+      el.typeTip.textContent = stage === 'type'
+        ? '提示：先不要往下滚动看文章（选对题型才解锁文章）'
+        : '提示：已解锁文章。';
+    }
+
+    // Type buttons
+    renderTypeButtons(cur, stage);
+
+    // Answer buttons
+    renderAnswerButtons(cur, stage);
+
+    // Nav button states
+    el.btnPrev.disabled = (mode === 'random');
+    el.btnNext.disabled = (mode === 'random');
+
+    clearFeedback();
+  }
+
+  function renderTypeButtons(q, stage){
+    el.typeBtns.innerHTML = '';
+    const labels = ['主旨题','一致题','焦点：原因理由','焦点：べき型','焦点：指示（代词）','焦点：中心词'];
+
+    labels.forEach(label => {
+      const btn = document.createElement('button');
+      btn.className = 'px-3 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold';
+      btn.textContent = label;
+
+      // 已解锁的题型判定：按钮置灰
+      if(stage !== 'type'){
+        btn.disabled = true;
+        btn.className += ' opacity-50 cursor-not-allowed';
+      }
+
+      btn.onclick = () => {
+        if(stage !== 'type') return;
+
+        const expected = typeLabelFromQuestion(q);
+        if(label !== expected){
+          setFeedback(el.typeFeedback, false, '题型不对，再想一想。');
+          return;
+        }
+
+        // 正确：解锁本题
+        qTypeUnlocked[q.id] = true;
+
+        setFeedback(el.typeFeedback, true, '✅ 题型正确！');
+        setTimeout(render, 180);
+      };
+
+      el.typeBtns.appendChild(btn);
+    });
+
+    // 如果本题已判过题型，给提示
+    if(stage !== 'type'){
+      setFeedback(el.typeFeedback, true, '✅ 本题题型已判定，可直接做题。');
+    } else {
+      el.typeFeedback.classList.add('hidden');
+    }
+  }
+
+  function renderAnswerButtons(q, stage){
+    el.answerBtns.innerHTML = '';
+
+    // 未进入做题阶段：按钮禁用
+    if(stage !== 'question'){
+      const tip = document.createElement('div');
+      tip.className = 'text-sm text-slate-400';
+      tip.textContent = '先完成题型判定后才能答题。';
+      el.answerBtns.appendChild(tip);
+      return;
+    }
+
+    const n = Number(q.choice_count || 4);
+
+    // 支持扩展：如果有 choice_images 就显示图片；否则显示纯数字
+    const choiceImages = Array.isArray(q.choice_images) ? q.choice_images : null;
+
+    for(let i=1;i<=n;i++){
+      const row = document.createElement('button');
+      row.className = 'w-full flex items-center gap-3 px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50';
+
+      const badge = document.createElement('div');
+      badge.className = 'w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0';
+      badge.textContent = String(i);
+
+      const content = document.createElement('div');
+      content.className = 'min-w-0 flex-1 text-left';
+
+      // 优先用choices/choice_images
+      // 如果有选项图片则显示；否则显示简单文字
+      if(choiceImages && choiceImages[i-1]){
+        const img = createSmartImg(choiceImages[i-1], 'w-full h-14 object-cover rounded-xl border border-slate-200');
+        content.appendChild(img);
+      } else {
+        const t = document.createElement('div');
+        t.className = 'text-sm text-slate-600';
+        t.textContent = '选项 ' + i;
+        content.appendChild(t);
+      }
+
+      row.appendChild(badge);
+      row.appendChild(content);
+
+      row.onclick = () => {
+        const correct = q.correct_choice != null ? Number(q.correct_choice) : null;
+        if(correct == null){
+          setFeedback(el.answerFeedback, true, `已选择：${i}（本题暂无正确答案数据）`);
+          return;
+        }
+        if(i === correct){
+          setFeedback(el.answerFeedback, true, '✅ 正确！');
+        } else {
+          setFeedback(el.answerFeedback, false, `❌ 不对。正确答案是：${correct}`);
+        }
+      };
+
+      el.answerBtns.appendChild(row);
+    }
+  }
+
+  // -------------------- Controls --------------------
+  el.zoomClose.onclick = () => el.zoomModal.classList.add('hidden');
+  el.zoomModal.onclick = (e) => { if(e.target === el.zoomModal) el.zoomModal.classList.add('hidden'); };
+
+  el.modeSequential.onclick = () => {
+    mode = 'sequential';
+    el.modeSequential.classList.add('bg-slate-900','text-white');
+    el.modeRandom.classList.remove('bg-slate-900','text-white');
+    render();
+  };
+
+  el.modeRandom.onclick = () => {
+    mode = 'random';
+    el.modeRandom.classList.add('bg-slate-900','text-white');
+    el.modeSequential.classList.remove('bg-slate-900','text-white');
+    idx = Math.floor(Math.random() * filtered.length);
+    render();
+  };
+
+  el.btnPrev.onclick = () => {
+    if(mode !== 'sequential') return;
+    idx = Math.max(0, idx - 1);
+    render();
+  };
+
+  el.btnNext.onclick = () => {
+    if(mode !== 'sequential') return;
+    idx = Math.min(filtered.length - 1, idx + 1);
+    render();
+  };
+
+  el.filterSelect.onchange = () => {
+    applyFilter();
+  };
+
+  el.setSelect.onchange = () => {
+    currentSetKey = el.setSelect.value;
+    idx = 0;
+    loadJSON();
+  };
+
+  function applyFilter(){
+    const v = el.filterSelect.value;
+    if(v === 'all') filtered = rawQuestions.slice();
+    else filtered = rawQuestions.filter(q => typeLabelFromQuestion(q) === v);
+
+    // 如果过滤后空了，重置
+    if(!filtered.length){
+      idx = 0;
+    } else {
+      idx = Math.min(idx, filtered.length - 1);
+    }
+    render();
+  }
+
+  // -------------------- Load JSON --------------------
+  async function loadJSON(){
+    el.loadStatus.textContent = '正在加载题库…';
+
+    let data = null;
+    let lastErr = null;
+    const setConfig = QUESTION_SETS[currentSetKey] || QUESTION_SETS.h28;
+
+    for(const path of setConfig.paths){
+      try{
+        const res = await fetch(path, {cache: 'no-store'});
+        if(!res.ok) throw new Error(`${path} => HTTP ${res.status}`);
+        data = await res.json();
+        break;
+      }catch(e){
+        lastErr = e;
+      }
+    }
+
+    if(!data){
+      el.loadStatus.textContent = `❌ 题库加载失败：${lastErr ? lastErr.message : 'unknown error'}。请确认 h28_rdk_questions.json 与 index.html 在同一层。`;
+      rawQuestions = [];
+      filtered = [];
+      render();
+      return;
+    }
+
+    const questions = Array.isArray(data.questions) ? data.questions : [];
+    rawQuestions = questions.map(q => {
+      // 兼容 id 字段缺失
+      if(!q.id){
+        q.id = `${q.era || ''}-${q.session || ''}-Q${String(q.q_no || '').padStart(2,'0')}`;
+      }
+      return q;
+    });
+
+    const title = safeText(data.meta && data.meta.title) || setConfig.label;
+    el.loadStatus.textContent = `✅ ${title} 已加载：${rawQuestions.length} 题。`;
+
+    // 默认顺序模式
+    el.modeSequential.classList.add('bg-slate-900','text-white');
+
+    applyFilter();
+  }
+
+  loadJSON();
+</script>
+
+</body>
+</html>
